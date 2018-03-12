@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<ui:composition template="/templates/desktop.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+
+
+	<ui:define name="nomeTela">
+		<h:outputText value="#{menu.label_saudacao}" />
+		<h:outputText value="   (" rendered="#{not empty LoginBean.ambiente}" />
+		<h:outputText value="#{LoginBean.ambiente} DSV"
+			style="font-size: 3; color: red;"
+			rendered="#{not empty LoginBean.ambiente}" />
+		<h:outputText value=")" rendered="#{not empty LoginBean.ambiente}" />
+	</ui:define>
+
+	<ui:define name="content">
+		<f:view>
+			<f:loadBundle basename="menu_bundle" var="menu" />
+			<h:form id="formWelcome">
+
+				<h:outputText value="#{menu.msg_selecao}" />
+
+				<br />
+				<br />
+
+				<div>
+					<h:outputText value="#{menu.label_bem_vindo_help}" escape="false" />
+				</div>
+
+				<br />
+
+				<div>
+					<h:outputText value="#{menu.menu_cadastro_fundos_bb_help}"
+						escape="false" />
+				</div>
+
+				<div>
+					<h:outputText value="#{menu.menu_posicao_bb_selic_help}"
+						escape="false" />
+				</div>
+
+				<div>
+					<h:outputText value="#{menu.menu_sair_help}" escape="false" />
+				</div>
+
+				<hr />
+
+				<br />
+
+				<div>
+					<h:outputText value="#{menu.versao}" />
+					<strong><h:outputText value="#{LoginBean.versao}" /></strong>
+				</div>
+
+				<hr />
+
+				<br />
+
+				<h:outputText value="#{menu.info_contato}" />
+				<h:outputLink value="mailto:ljbm-xpto.net">
+					<h:outputText value="ljbm-xpto.net" />
+				</h:outputLink>
+			</h:form>
+		</f:view>
+
+	</ui:define>
+
+</ui:composition>
+

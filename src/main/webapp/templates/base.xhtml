@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html 	xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:ui="http://java.sun.com/jsf/facelets"
+		xmlns:rich="http://richfaces.org/rich"
+		xmlns:f="http://java.sun.com/jsf/core"
+		
+		xmlns:h="http://java.sun.com/jsf/html">
+		
+<ui:decorate template="/templates/comum.xhtml">
+	<ui:define name="conteudo">
+		<div id="aviso" class="aviso">
+			<ui:insert name="mensagem"/>
+			<rich:messages	id="listaDeMensagens"
+							layout="list" 
+							styleClass="listaMensagens"
+							errorClass="erro" 
+							errorLabelClass="erro" 
+							infoClass="sucesso" 
+							infoLabelClass="sucesso"
+							warnClass="atencao" 
+							warnLabelClass="atencao"
+							keepTransient="true" 
+							showSummary="false" 
+							showDetail="true">
+				<f:facet name="infoMarker">
+					<h:graphicImage value="/../estfgi/images/geral/info.gif" alt="Informação"/>
+				</f:facet>
+				<f:facet name="warnMarker">
+					<h:graphicImage value="/../estfgi/images/geral/warning.gif" alt="Alerta"/>
+				</f:facet>
+				<f:facet name="errorMarker">
+					<h:graphicImage value="/../estfgi/images/geral/error.gif" alt="Erro"/>
+				</f:facet>
+			</rich:messages>
+		</div> <!-- aviso/mensagem -->
+	<ui:insert name="principal"/>
+	</ui:define>
+</ui:decorate>
+</html>

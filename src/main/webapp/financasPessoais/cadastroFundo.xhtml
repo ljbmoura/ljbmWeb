@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<ui:composition template="/templates/desktop.xhtml"
+xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:my="http://java.sun.com/jsf/composite/components">
+	
+	<ui:define name="nomeTela">
+		<h:outputText value="#{menu.menu_cadastro_fundos_bb}"/>
+		<h:outputText value="   (" rendered="#{not empty LoginBean.ambiente}"/>
+		<h:outputText value="#{LoginBean.ambiente} DSV" style="font-size: 3; 
+			color: red;" rendered="#{not empty LoginBean.ambiente}"/>
+		<h:outputText value=")" rendered="#{not empty LoginBean.ambiente}"/>
+	</ui:define>
+
+	<ui:define name="content">
+		<h:outputStylesheet name="app.css" library="css" />
+		<h:outputScript target="head" name="showMessage.js" library="js" />
+
+		<h:form id="reg">
+
+			<rich:panel id="novoFundoInvestimentoPanel"
+				header="Registro (Bean Validation example)" headerClass="header">
+				<my:fundoInvestimentoForm fundoInvestimento="#{newFundoInvestimento}" />
+
+				<p>Enforces annotation-based constraints defined on the model
+					class.</p>
+
+				<h:panelGrid columns="2">
+					<a4j:commandButton id="register"
+						action="#{fundoInvestimentoRegistration.register}"
+						value="Register" execute="novoFundoInvestimentoPanel"
+						render="novoFundoInvestimentoPanel" />
+					<rich:messages globalOnly="true" />
+
+				</h:panelGrid>
+			</rich:panel>
+			<br />
+
+			<div id="newMemberMessages" class="update" />
+
+			<rich:collapsiblePanel id="memberList" header="Members"
+				headerClass="header" title="Click to expand/collapse">
+				<h:panelGroup rendered="#{empty fundosInvestimento}">
+					<em>No registered fundosInvestimento.</em>
+				</h:panelGroup>
+
+				<rich:dataTable var="_fundoInvestimento"
+					value="#{fundosInvestimento}"
+					rendered="#{not empty fundosInvestimento}">
+
+					<rich:column>
+						<f:facet name="header">Id</f:facet>
+                #{_fundoInvestimento.id}
+            </rich:column>
+					<rich:column>
+						<f:facet name="header">Nome</f:facet>
+                #{_fundoInvestimento.nome}
+            </rich:column>
+					<rich:column>
+						<f:facet name="header">CNPJ</f:facet>
+                #{_fundoInvestimento.CNPJ}
+            </rich:column>
+					<rich:column>
+						<f:facet name="header">Taxa de Imposto de Renda#</f:facet>
+                #{_fundoInvestimento.taxaImpostoRenda}
+            </rich:column>
+					<rich:column>
+						<f:facet name="header">REST URL</f:facet>
+						<a
+							href="#{request.contextPath}/rest/fundosInvestimento/#{_fundoInvestimento.id}">/rest/fundosInvestimento/#{_fundoInvestimento.id}</a>
+					</rich:column>
+					<f:facet name="footer">
+                REST URL for all fundosInvestimento: <a
+							href="#{request.contextPath}/rest/fundosInvestimento">/rest/fundosInvestimento</a>
+					</f:facet>
+				</rich:dataTable>
+			</rich:collapsiblePanel>
+		</h:form>
+	</ui:define>
+</ui:composition>

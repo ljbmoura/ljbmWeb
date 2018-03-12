@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+
+<ui:composition template="/templates/desktop.xhtml"
+xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+
+	<ui:define name="nomeTela">
+		<h:outputText value="#{menu.menu_posicao_bb_selic}" />
+		<h:outputText value="   (" rendered="#{not empty LoginBean.ambiente}" />
+		<h:outputText value="#{LoginBean.ambiente} DSV"
+			style="font-size: 3; 
+			color: red;"
+			rendered="#{not empty LoginBean.ambiente}" />
+		<h:outputText value=")" rendered="#{not empty LoginBean.ambiente}" />
+	</ui:define>
+
+	<ui:define name="content">
+		<h:outputStylesheet name="app.css" library="css" />
+		<h:outputScript target="head" name="showMessage.js" library="js" />
+
+		<h:form id="posfin">
+
+			<h:messages styleClass="messages" errorClass="invalid"
+				infoClass="valid" warnClass="warning" globalOnly="true" />
+
+			<h:panelGroup
+				rendered="#{empty avaliadorInvestimentoManagedBean.avaliacao}">
+				<em>Posição ainda não obtida.</em>
+			</h:panelGroup>
+
+			<rich:dataTable 
+				rendered="#{not empty avaliadorInvestimentoManagedBean.avaliacao}"
+				var="_avaliacao"
+				value="#{avaliadorInvestimentoManagedBean.avaliacao}">
+
+				<rich:column>
+					<f:facet name="header">Fundo</f:facet>
+                	#{_avaliacao.nomeInvestimento}
+            	</rich:column>
+				<rich:column>
+					<f:facet name="header">% Rentabilidade do Fundo</f:facet>
+                	#{_avaliacao.taxaRentabilidadeFundo}
+            	</rich:column>
+				<rich:column>
+					<f:facet name="header">% Rentab. SELIC Equivalente ao Fundo</f:facet>
+                	#{_avaliacao.taxaRentabilidadeSELICEquivalenteFundo}
+            	</rich:column>
+				<rich:column>
+					<f:facet name="header">Diferença Rentabilidade FUNDO X SELIC</f:facet>
+					<h:outputText
+						value="#{_avaliacao.diferencaRentabilidadeFundoSELIC}">
+						<f:convertNumber type="currency" />
+					</h:outputText>
+				</rich:column>
+				<rich:column>
+					<f:facet name="header">Total Valor Fundo</f:facet>
+					<h:outputText value="#{_avaliacao.totalValorFundo}">
+						<f:convertNumber type="currency" />
+					</h:outputText>
+				</rich:column>
+				<rich:column>
+					<f:facet name="header">Total Valor Equiv. SELIC</f:facet>
+					<h:outputText value="#{_avaliacao.totalValorEquivalenteSELIC}">
+						<f:convertNumber type="currency" />
+					</h:outputText>
+				</rich:column>
+			</rich:dataTable>
+			<br/>
+			<h:commandButton id="posicao_bb_selic"
+				value="#{menu.menu_posicao_bb_selic}"
+				styleClass="link_menu_principal"
+				action="#{avaliadorInvestimentoManagedBean.posicaoInvestimentosFrenteSELIC}" />
+		</h:form>
+
+	</ui:define>
+</ui:composition>

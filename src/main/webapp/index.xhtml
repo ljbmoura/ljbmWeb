@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	template="/templates/default.xhtml">
+	<ui:define name="content">
+		<h1>Welcome to JBoss AS 7 web LJBM!</h1>
+
+		<p>You have successfully deployed a Java EE 6 web application on
+			JBoss AS 7.</p>
+
+		<h:form id="reg">
+			<h2>Register (Bean Validation example)</h2>
+			<p>Enforces annotation-based constraints defined on the model
+				class.</p>
+			<table>
+				<tr>
+					<th style="text-align: right;"><h:outputLabel for="nome"
+							value="Nome:" /></th>
+					<td><h:inputText id="nome"
+							value="#{newFundoInvestimento.nome}" /> <h:message for="nome"
+							errorClass="invalid" /></td>
+				</tr>
+				<tr>
+					<th style="text-align: right;"><h:outputLabel for="CNPJ"
+							value="CNPJ:" /></th>
+					<td><h:inputText id="CNPJ"
+							value="#{newFundoInvestimento.CNPJ}" /> <h:message for="CNPJ"
+							errorClass="invalid" /></td>
+				</tr>
+				<tr>
+					<th style="text-align: right;"><h:outputLabel
+							for="taxaImpostoRenda" value="Taxa Imposto de Renda (ex: 0.15):" /></th>
+					<td><h:inputText id="taxaImpostoRenda"
+							value="#{newFundoInvestimento.taxaImpostoRenda}" /> <h:message
+							for="taxaImpostoRenda" errorClass="invalid" /></td>
+				</tr>
+			</table>
+			<p>
+				<h:commandButton id="register"
+					action="#{fundoInvestimentoRegistration.register}" value="Register" />
+				<h:messages styleClass="messages" errorClass="invalid"
+					infoClass="valid" warnClass="warning" globalOnly="true" />
+			</p>
+		</h:form>
+		<h2>Members</h2>
+		<h:panelGroup rendered="#{empty fundosInvestimento}">
+			<em>No registered fundosInvestimento.</em>
+		</h:panelGroup>
+		<h:dataTable var="_fundoInvestimento" value="#{fundosInvestimento}"
+			rendered="#{not empty fundosInvestimento}">
+			<h:column>
+				<f:facet name="header">Id</f:facet>
+                #{_fundoInvestimento.id}
+            </h:column>
+			<h:column>
+				<f:facet name="header">Nome</f:facet>
+                #{_fundoInvestimento.nome}
+            </h:column>
+			<h:column>
+				<f:facet name="header">CNPJ</f:facet>
+                #{_fundoInvestimento.CNPJ}
+            </h:column>
+			<h:column>
+				<f:facet name="header">Taxa de Imposto de Renda#</f:facet>
+                #{_fundoInvestimento.taxaImpostoRenda}
+            </h:column>
+			<h:column>
+				<f:facet name="header">REST URL</f:facet>
+				<a
+					href="#{request.contextPath}/rest/fundosInvestimento/#{_fundoInvestimento.id}">/rest/fundosInvestimento/#{_fundoInvestimento.id}</a>
+			</h:column>
+			<f:facet name="footer">
+                REST URL for all fundosInvestimento: <a
+					href="#{request.contextPath}/rest/fundosInvestimento">/rest/fundosInvestimento</a>
+			</f:facet>
+		</h:dataTable>
+	</ui:define>
+</ui:composition>

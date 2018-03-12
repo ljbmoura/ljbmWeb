@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+    
+<html xmlns="http://www.w3.org/1999/xhtml"
+   xmlns:h="http://java.sun.com/jsf/html"
+   xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<title>LJBM -&#160;<ui:insert name="titulo"/></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<h:outputStylesheet name="css/screen.css" />
+
+	<meta name="keywords" content="LJBM" />
+	<meta name="description" content="LJBM" />
+
+</h:head>
+
+<h:body>
+<div id="ie6ctr">
+    <noscript>
+		<div id="nojavascript">O Javascript está desabilitado no seu browser, o sistema não funcionará adequadamente.</div>
+	</noscript>
+	
+    <div class="topo_bndes">
+    	<p>TODO: CABEÇALHO?<br /></p>
+     	<h:graphicImage value="/resources/gfx/banner.png" alt="logo cabeçalho LJBM" />
+    </div> 
+
+	<div id="content"> <!-- <div id="outer">-->
+
+		<div id="sidebar">
+			<ui:insert name="menu">
+				<ui:include src="/bemvindo/menu.xhtml"/>
+			</ui:insert>
+		</div>
+	  
+		<div id="nomeTela" class="nomeTela">
+			<ui:insert name="nomeTela"/>
+		</div>
+		<ui:insert name="conteudo"/>
+
+	</div> <!-- outer -->
+	
+	<!-- rodapé 
+	<div class="rodape">
+		&#160;
+	</div>
+	-->
+	<div id="footer">
+	   <p>TODO: RODAPÉ<br /></p>
+	   <h:graphicImage value="/resources/gfx/logo.png" alt="logo rodapé LJBM" />
+	</div>
+</div> <!-- ie6ctr -->
+</h:body>
+</html>
