@@ -13,6 +13,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.com.ljbm.fp.modelo.FundoInvestimento;
+import br.com.ljbm.fp.modelo.TipoFundoInvestimento;
 import br.com.ljbm.recursos.FinancasPessoaisDelegate;
 
 
@@ -70,6 +71,7 @@ public class FundoInvestimentoRegistration {
 		// newFundoInvestimento.setId(3l);
 		// newFundoInvestimento.setVersion(0);
 
+		newFundoInvestimento.setTipoFundoInvestimento(TipoFundoInvestimento.TesouroDireto);
 		log.info("Incluindo na BD " + newFundoInvestimento.toString());
 		financasPessoaisDelegate.incluiFundoInvestimento(
 				newFundoInvestimento);

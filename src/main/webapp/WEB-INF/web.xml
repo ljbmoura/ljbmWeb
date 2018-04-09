@@ -4,13 +4,13 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
 	<display-name>ljbmWeb</display-name>
 
-	<!-- <resource-ref> -->
-	<!-- <res-ref-name>jdbc/ljbm</res-ref-name> -->
-	<!-- <res-type>javax.sql.DataSource</res-type> -->
-	<!-- <res-auth>Container</res-auth> -->
-	<!-- <res-sharing-scope>Shareable</res-sharing-scope> -->
-	<!-- <lookup-name>jdbc/ljbm</lookup-name> -->
-	<!-- </resource-ref> -->
+	<resource-ref>
+		<res-ref-name>jdbc/ljbmDS</res-ref-name>
+		<res-type>javax.sql.DataSource</res-type>
+		<res-auth>Container</res-auth>
+		<res-sharing-scope>Shareable</res-sharing-scope>
+		<lookup-name>jdbc/ljbmDS</lookup-name>
+	</resource-ref>
 
 	<!-- <context-param> <param-name>javax.faces.DEFAULT_SUFFIX</param-name> 
 		<param-value>.xhtml</param-value> </context-param> Set the PROJECT_STAGE 

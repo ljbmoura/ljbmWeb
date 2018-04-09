@@ -7,8 +7,8 @@ package br.com.ljbm.recursos;
 
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
 
 import br.com.ljbm.fp.modelo.FundoInvestimento;
 import br.com.ljbm.fp.servico.FPDominio;
@@ -19,7 +19,7 @@ public class FinancasPessoaisDelegate {
 
 //	private static FinancasPessoaisDelegate instance = new FinancasPessoaisDelegate();
 
-	@Inject
+	@EJB
 	FPDominio model;
 	
 //	public static FinancasPessoaisDelegate getInstance() {
