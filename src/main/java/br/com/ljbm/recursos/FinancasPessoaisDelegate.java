@@ -10,6 +10,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.ApplicationScoped;
 
+import br.com.ljbm.fp.modelo.Corretora;
 import br.com.ljbm.fp.modelo.FundoInvestimento;
 import br.com.ljbm.fp.servico.FPDominio;
 import br.com.ljbm.fp.servico.FPException;
@@ -40,5 +41,9 @@ public class FinancasPessoaisDelegate {
 
 	public FundoInvestimento recuperaFundosInvestimentoPorIde(Long ide) throws FPException {
 		return model.getFundoInvestimento(ide);
+	}
+	
+	public Corretora recuperaCorretoraPorIde(Long ide) throws FPException {
+		return model.getCorretora(ide);
 	}
 }

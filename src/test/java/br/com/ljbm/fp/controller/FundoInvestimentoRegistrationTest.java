@@ -48,9 +48,9 @@ public class FundoInvestimentoRegistrationTest {
 		newFundoInvestimento.setCNPJ("096480500001-54");
 		newFundoInvestimento.setTaxaImpostoRenda(new BigDecimal("0.15"));
 		fundoInvestimentoRegistration.register();
-		assertNotNull(newFundoInvestimento.getId());
+		assertNotNull(newFundoInvestimento.getIde());
 		log.info(newFundoInvestimento.getNome() + " was persisted with id "
-				+ newFundoInvestimento.getId());
+				+ newFundoInvestimento.getIde());
 	}
 
 }

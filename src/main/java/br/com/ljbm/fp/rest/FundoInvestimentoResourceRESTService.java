@@ -4,19 +4,20 @@ import java.util.List;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Response;
 
 import br.com.ljbm.fp.modelo.ComparacaoInvestimentoVersusSELIC;
+import br.com.ljbm.fp.modelo.Corretora;
 import br.com.ljbm.fp.modelo.FundoInvestimento;
 import br.com.ljbm.fp.servico.AvaliadorInvestimentoRemote;
+import br.com.ljbm.fp.servico.FPException;
 import br.com.ljbm.recursos.FinancasPessoaisDelegate;
-
-//import javax.validation.ClockProvider;;
-//import org.hibernate.validator.engine.;
-import org.richfaces.resource.ResourceLibraryFactoryImpl;
 /**
  * Produces a RESTful service to read the contents of the FundoInvestimento
  * table.
@@ -41,6 +42,23 @@ public class FundoInvestimentoResourceRESTService {
 	@Inject
 	private FinancasPessoaisDelegate financasPessoaisDelegate;
 
+	@POST
+	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON )
+	@Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+	public Response inclui (FundoInvestimento fundoInvestimento) {
+		
+		try {
+			Corretora c = financasPessoaisDelegate.recuperaCorretoraPorIde(fundoInvestimento.getCorretora().getIde());
+			fundoInvestimento.setCorretora(c);
+			financasPessoaisDelegate.incluiFundoInvestimento(fundoInvestimento);
+			System.out.println("criou fundo" + fundoInvestimento.toString());
+			return Response.ok().entity(fundoInvestimento).build();
+		} catch (FPException e) {
+			e.printStackTrace();
+			return Response.status(500).build();
+		}
+	}
+	
 	@GET
 	@Produces("text/xml")
 	// The listAllFundosInvestimento() method is called when the raw endpoint is
