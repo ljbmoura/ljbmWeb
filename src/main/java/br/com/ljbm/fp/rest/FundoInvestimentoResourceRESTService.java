@@ -15,7 +15,7 @@ import javax.ws.rs.core.Response;
 import br.com.ljbm.fp.modelo.ComparacaoInvestimentoVersusSELIC;
 import br.com.ljbm.fp.modelo.Corretora;
 import br.com.ljbm.fp.modelo.FundoInvestimento;
-import br.com.ljbm.fp.servico.AvaliadorInvestimentoRemote;
+import br.com.ljbm.fp.servico.AvaliadorInvestimento;
 import br.com.ljbm.fp.servico.FPException;
 import br.com.ljbm.recursos.FinancasPessoaisDelegate;
 /**
@@ -37,7 +37,7 @@ public class FundoInvestimentoResourceRESTService {
 	// private EntityManager em;
 
 	@Inject
-	private AvaliadorInvestimentoRemote avaliadorInvestimento;
+	private AvaliadorInvestimento avaliadorInvestimento;
 
 	@Inject
 	private FinancasPessoaisDelegate financasPessoaisDelegate;
@@ -92,14 +92,14 @@ public class FundoInvestimentoResourceRESTService {
 
 	}
 
-	@GET
-	@Path("/atualizaBaseInvestimentos_CotacaoSELIC")
-	@Produces("text/plain")
-	public String atualizaBaseInvestimentos_CotacaoSELIC() {
-
-		// TODO: PARA DAR ERRO MESMO, IMPLEMENTAR A OBTENÇÃO DA DATA POSTERIORMENTE
-		avaliadorInvestimento.atualizaBaseInvestimentos_CotacaoSELIC("", "");
-		return "ok";
-
-	}
+//	@GET
+//	@Path("/atualizaBaseInvestimentos_CotacaoSELIC")
+//	@Produces("text/plain")
+//	public String atualizaBaseInvestimentos_CotacaoSELIC() {
+//
+//		// TODO: PARA DAR ERRO MESMO, IMPLEMENTAR A OBTENÇÃO DA DATA POSTERIORMENTE
+//		avaliadorInvestimento.atualizaBaseInvestimentos_CotacaoSELIC("", "");
+//		return "ok";
+//
+//	}
 }

@@ -12,7 +12,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.com.ljbm.fp.modelo.ComparacaoInvestimentoVersusSELIC;
-import br.com.ljbm.fp.servico.AvaliadorInvestimentoRemote;
+import br.com.ljbm.fp.servico.AvaliadorInvestimento;
 
 /**
  * the class that allows us to create new FundoInvestimento from the JSF page
@@ -47,7 +47,7 @@ public class AvaliadorInvestimentoManagedBean {
 	private FacesContext facesContext;
 
 	@Inject
-	private AvaliadorInvestimentoRemote avaliadorInvestimento;
+	private AvaliadorInvestimento avaliadorInvestimento;
 
 	private List<ComparacaoInvestimentoVersusSELIC> avaliacao;
 

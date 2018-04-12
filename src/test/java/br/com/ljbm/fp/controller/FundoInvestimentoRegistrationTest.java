@@ -15,10 +15,8 @@ import org.junit.Ignore;
 //import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 //import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import br.com.ljbm.fp.modelo.FundoInvestimento;
-import br.com.ljbm.recursos.SuporteAplicacao;
 
 //@RunWith(Arquillian.class)
 public class FundoInvestimentoRegistrationTest {

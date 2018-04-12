@@ -1,14 +1,8 @@
 package br.com.ljbm.recursos;
 
-import javax.enterprise.inject.Produces;
-import javax.enterprise.inject.spi.InjectionPoint;
 import javax.inject.Inject;
 import javax.naming.Context;
 import javax.naming.NamingException;
-
-import br.com.ljbm.fp.servico.AvaliadorInvestimentoRemote;
-import br.com.ljbm.fp.servico.FPDominio;
-import br.com.ljbm.fp.servico.FPDominioMockImpl;
 
 /**
  * @author luc
@@ -45,6 +39,7 @@ public class EJBFinancasPessoais {
 //
 //	}
 
+	@SuppressWarnings("unused")
 	private Object lookupServicoRemotoEJBLab(String beanName,
 			@SuppressWarnings("rawtypes") Class classViewRemota)
 			throws NamingException {
