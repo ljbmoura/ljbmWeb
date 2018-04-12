@@ -12,6 +12,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
+import org.apache.logging.log4j.Logger;
+
 import br.com.ljbm.fp.modelo.ComparacaoInvestimentoVersusSELIC;
 import br.com.ljbm.fp.modelo.Corretora;
 import br.com.ljbm.fp.modelo.FundoInvestimento;
@@ -32,15 +34,15 @@ import br.com.ljbm.recursos.FinancasPessoaisDelegate;
 // the path for this endpoint
 @RequestScoped
 public class FundoInvestimentoResourceRESTService {
-	// @Inject
-	// // JAX-RS endpoints are CDI enabled, and can use CDI-style injection
-	// private EntityManager em;
 
 	@Inject
 	private AvaliadorInvestimento avaliadorInvestimento;
 
 	@Inject
 	private FinancasPessoaisDelegate financasPessoaisDelegate;
+	
+	@Inject
+	private Logger log;
 
 	@POST
 	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON )
@@ -51,7 +53,7 @@ public class FundoInvestimentoResourceRESTService {
 			Corretora c = financasPessoaisDelegate.recuperaCorretoraPorIde(fundoInvestimento.getCorretora().getIde());
 			fundoInvestimento.setCorretora(c);
 			financasPessoaisDelegate.incluiFundoInvestimento(fundoInvestimento);
-			System.out.println("criou fundo" + fundoInvestimento.toString());
+			log.info("criou fundo " + fundoInvestimento.toString());
 			return Response.ok().entity(fundoInvestimento).build();
 		} catch (FPException e) {
 			e.printStackTrace();
