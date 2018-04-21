@@ -2,6 +2,7 @@ package br.com.ljbm.fp.rest;
 
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -11,8 +12,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
-
-import org.apache.logging.log4j.Logger;
 
 import br.com.ljbm.fp.modelo.ComparacaoInvestimentoVersusSELIC;
 import br.com.ljbm.fp.modelo.Corretora;
@@ -35,14 +34,14 @@ import br.com.ljbm.recursos.FinancasPessoaisDelegate;
 @RequestScoped
 public class FundoInvestimentoResourceRESTService {
 
-	@Inject
+	@EJB (lookup="java:global/ljbmEAR/ljbmEJB/AvaliadorInvestimentoImpl!br.com.ljbm.fp.servico.AvaliadorInvestimento")
 	private AvaliadorInvestimento avaliadorInvestimento;
 
 	@Inject
 	private FinancasPessoaisDelegate financasPessoaisDelegate;
 	
-	@Inject
-	private Logger log;
+//	@Inject
+//	private Logger log;
 
 	@POST
 	@Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON )
@@ -53,7 +52,7 @@ public class FundoInvestimentoResourceRESTService {
 			Corretora c = financasPessoaisDelegate.recuperaCorretoraPorIde(fundoInvestimento.getCorretora().getIde());
 			fundoInvestimento.setCorretora(c);
 			financasPessoaisDelegate.incluiFundoInvestimento(fundoInvestimento);
-			log.info("criou fundo " + fundoInvestimento.toString());
+//			log.info("criou fundo " + fundoInvestimento.toString());
 			return Response.ok().entity(fundoInvestimento).build();
 		} catch (FPException e) {
 			e.printStackTrace();

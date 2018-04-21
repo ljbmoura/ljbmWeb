@@ -18,15 +18,25 @@ import br.com.ljbm.fp.servico.FPException;
 @ApplicationScoped
 public class FinancasPessoaisDelegate {
 
-//	private static FinancasPessoaisDelegate instance = new FinancasPessoaisDelegate();
-
-	@EJB
+//	@PostConstruct
+//	public void init()  {
+//		Context context;
+//		try {
+//			context = new InitialContext();
+//			System.out.println("--Looking-up FPDominio... ");
+//			Object obj = context.lookup("java:comp/env/ejb/FPDominioImpl"); // usando <ejb-ref> no web.xml
+//			System.out.println("--Narrowing FPDominio... ");		
+//			model = (FPDominio)obj;
+//		} catch (NamingException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	}
+		
+//	@EJB(name = "ejb/FPDominio") // usando <ejb-ref> no web.xml
+	@EJB(lookup = "java:global/ljbmEAR/ljbmEJB/FPDominioImpl!br.com.ljbm.fp.servico.FPDominio")
 	FPDominio model;
 	
-//	public static FinancasPessoaisDelegate getInstance() {
-//		return instance;
-//	}
-//
 	public List<FundoInvestimento> getAllFundoInvestimento() throws FPException {
 		return model.getAllFundoInvestimento();
 	}

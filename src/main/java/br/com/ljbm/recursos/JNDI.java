@@ -20,7 +20,8 @@ public class JNDI {
 //					org.jboss.naming.remote.client.InitialContextFactory.class
 //							.getName());
 			env.put(Context.URL_PKG_PREFIXES, "org.jboss.ejb.client.naming");
-			env.put(Context.PROVIDER_URL, "remote://localhost:4447");
+			env.put(Context.PROVIDER_URL, "localhost:2809/NameService");
+//			env.put(Context.PROVIDER_URL, "remote://localhost:4447");
 			env.put(Context.SECURITY_PRINCIPAL, "aplicacao");
 			env.put(Context.SECURITY_CREDENTIALS, "dun541vast207");
 			env.put(Context.SECURITY_PROTOCOL, "ssl");

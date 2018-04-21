@@ -4,24 +4,37 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
 	<display-name>ljbmWeb</display-name>
 
-	<resource-ref>
-		<res-ref-name>jdbc/ljbmDS</res-ref-name>
-		<res-type>javax.sql.DataSource</res-type>
-		<res-auth>Container</res-auth>
-		<res-sharing-scope>Shareable</res-sharing-scope>
-		<lookup-name>jdbc/ljbmDS</lookup-name>
-	</resource-ref>
+<!-- 	<ejb-ref> -->
+<!-- 		<ejb-ref-name>ejb/FPDominio</ejb-ref-name> -->
+<!-- 		<ejb-ref-type>Session</ejb-ref-type> -->
+<!-- 		<lookup-name> -->
+<!-- 			java:global/ljbmEAR/ljbmEJB/FPDominioImpl!br.com.ljbm.fp.servico.FPDominio -->
+<!-- 		</lookup-name> -->
+<!-- 		<remote>br.com.ljbm.fp.servico.FPDominio</remote> -->
+<!-- 	</ejb-ref> -->
 
-	<!-- <context-param> <param-name>javax.faces.DEFAULT_SUFFIX</param-name> 
-		<param-value>.xhtml</param-value> </context-param> Set the PROJECT_STAGE 
-		to 'Development' to receive constructive error messages during development. 
-		Change the PROJECT_STAGE to 'Production' when putting the application into 
-		production -->
+<!-- 	<resource-ref> -->
+<!-- 		<res-ref-name>jdbc/ljbmDS</res-ref-name> -->
+<!-- 		<res-type>javax.sql.DataSource</res-type> -->
+<!-- 		<res-auth>Container</res-auth> -->
+<!-- 		<res-sharing-scope>Shareable</res-sharing-scope> -->
+<!-- 		<lookup-name>jdbc/ljbmDS</lookup-name> -->
+<!-- 	</resource-ref> -->
 
-	<context-param>
+<!-- 	<context-param> -->
+<!-- 		<param-name>javax.faces.DEFAULT_SUFFIX</param-name> -->
+<!-- 		<param-value>.xhtml</param-value> -->
+<!-- 	</context-param> -->
+
+<!-- 	
+	Set the PROJECT_STAGE to 'Development' to receive constructive error messages during
+	development. Change the PROJECT_STAGE to 'Production' when putting the application into
+	production -->	
+ 	<context-param>
 		<param-name>javax.faces.PROJECT_STAGE</param-name>
 		<param-value>Development</param-value>
 	</context-param>
+	
 	<context-param>
 		<description>State saving method: 'client' or 'server' (default). See JSF Specification section 2.5.2</description>
 		<param-name>javax.faces.STATE_SAVING_METHOD</param-name>
