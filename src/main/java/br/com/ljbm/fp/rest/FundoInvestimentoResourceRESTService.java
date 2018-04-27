@@ -49,8 +49,6 @@ public class FundoInvestimentoResourceRESTService {
 	public Response inclui (FundoInvestimento fundoInvestimento) {
 		
 		try {
-			Corretora c = financasPessoaisDelegate.recuperaCorretoraPorIde(fundoInvestimento.getCorretora().getIde());
-			fundoInvestimento.setCorretora(c);
 			financasPessoaisDelegate.incluiFundoInvestimento(fundoInvestimento);
 //			log.info("criou fundo " + fundoInvestimento.toString());
 			return Response.ok().entity(fundoInvestimento).build();
