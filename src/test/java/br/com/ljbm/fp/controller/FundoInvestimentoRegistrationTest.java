@@ -3,7 +3,7 @@ package br.com.ljbm.fp.controller;
 import static org.junit.Assert.assertNotNull;
 
 import java.math.BigDecimal;
-import java.util.logging.Logger;
+import org.apache.logging.log4j.Logger;
 
 import javax.inject.Inject;
 

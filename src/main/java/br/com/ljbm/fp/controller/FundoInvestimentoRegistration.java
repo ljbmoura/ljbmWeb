@@ -1,6 +1,6 @@
 package br.com.ljbm.fp.controller;
 
-import java.util.logging.Logger;
+import org.apache.logging.log4j.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateful;

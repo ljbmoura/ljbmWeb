@@ -1,7 +1,5 @@
 package br.com.ljbm.recursos;
 
-import java.util.logging.Logger;
-
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.InjectionPoint;
@@ -9,6 +7,9 @@ import javax.faces.context.FacesContext;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Uses CDI to alias Java EE resources to CDI beans, using "resource producers"
@@ -26,10 +27,14 @@ import javax.naming.NamingException;
  */
 public class SuporteAplicacao {
 
+	// @Produces
+	// public Logger produceLog(InjectionPoint injectionPoint) {
+	// return Logger.getLogger(injectionPoint.getMember().getDeclaringClass()
+	// .getName());
+	// }
 	@Produces
-	public Logger produceLog(InjectionPoint injectionPoint) {
-		return Logger.getLogger(injectionPoint.getMember().getDeclaringClass()
-				.getName());
+	Logger produceLog(InjectionPoint injectionPoint) {
+		return LogManager.getFormatterLogger(injectionPoint.getMember().getDeclaringClass().getName());
 	}
 
 	@Produces
@@ -39,17 +44,16 @@ public class SuporteAplicacao {
 	}
 
 	@Produces
-	public Context produceContextoJNDI(InjectionPoint injectionPoint)
-			throws NamingException {
+	public Context produceContextoJNDI(InjectionPoint injectionPoint) throws NamingException {
 		// TODO: estudar escopo deste recurso
 		return new InitialContext();
 	}
 
-//	@Produces
-//	@ApplicationScoped
-//	public FinancasPessoaisDelegate produceFinancasPessoaisDelegate(
-//			) {
-//		return FinancasPessoaisDelegate.getInstance();
-//	}
+	// @Produces
+	// @ApplicationScoped
+	// public FinancasPessoaisDelegate produceFinancasPessoaisDelegate(
+	// ) {
+	// return FinancasPessoaisDelegate.getInstance();
+	// }
 
 }

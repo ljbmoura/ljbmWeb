@@ -41,8 +41,8 @@ public class FinancasPessoaisDelegate {
 		return model.getAllFundoInvestimento();
 	}
 
-	public void incluiFundoInvestimento(FundoInvestimento fundoInvestimento) throws FPException {
-		model.addFundoInvestimento(fundoInvestimento);
+	public FundoInvestimento incluiFundoInvestimento(FundoInvestimento fundoInvestimento) throws FPException {
+		return model.addFundoInvestimento(fundoInvestimento);
 	}
 	
 	public List<FundoInvestimento> recuperaFundosInvestimentoPorName() {
