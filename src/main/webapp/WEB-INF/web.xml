@@ -4,14 +4,14 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
 	<display-name>ljbmWeb</display-name>
 
-<!-- 	<ejb-ref> -->
-<!-- 		<ejb-ref-name>ejb/FPDominio</ejb-ref-name> -->
-<!-- 		<ejb-ref-type>Session</ejb-ref-type> -->
-<!-- 		<lookup-name> -->
-<!-- 			java:global/ljbmEAR/ljbmEJB/FPDominioImpl!br.com.ljbm.fp.servico.FPDominio -->
-<!-- 		</lookup-name> -->
-<!-- 		<remote>br.com.ljbm.fp.servico.FPDominio</remote> -->
-<!-- 	</ejb-ref> -->
+	<ejb-ref>
+		<ejb-ref-name>ejb/FPDominio</ejb-ref-name>
+		<ejb-ref-type>Session</ejb-ref-type>
+		<lookup-name>
+			java:global/ljbmEAR/ljbmEJB/FPDominioImpl!br.com.ljbm.fp.servico.FPDominio
+		</lookup-name>
+		<remote>br.com.ljbm.fp.servico.FPDominio</remote>
+	</ejb-ref>
 
 <!-- 	<resource-ref> -->
 <!-- 		<res-ref-name>jdbc/ljbmDS</res-ref-name> -->

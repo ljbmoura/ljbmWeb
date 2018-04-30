@@ -27,11 +27,6 @@ import org.apache.logging.log4j.Logger;
  */
 public class SuporteAplicacao {
 
-	// @Produces
-	// public Logger produceLog(InjectionPoint injectionPoint) {
-	// return Logger.getLogger(injectionPoint.getMember().getDeclaringClass()
-	// .getName());
-	// }
 	@Produces
 	Logger produceLog(InjectionPoint injectionPoint) {
 		return LogManager.getFormatterLogger(injectionPoint.getMember().getDeclaringClass().getName());

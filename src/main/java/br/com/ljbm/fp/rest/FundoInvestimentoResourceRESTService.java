@@ -1,6 +1,7 @@
 package br.com.ljbm.fp.rest;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
+import static javax.ws.rs.core.MediaType.APPLICATION_XML;
 
 import java.net.URI;
 import java.util.List;
@@ -22,8 +23,8 @@ import org.apache.logging.log4j.Logger;
 import br.com.ljbm.fp.modelo.ComparacaoInvestimentoVersusSELIC;
 import br.com.ljbm.fp.modelo.FundoInvestimento;
 import br.com.ljbm.fp.servico.AvaliadorInvestimento;
+import br.com.ljbm.fp.servico.FPDominio;
 import br.com.ljbm.fp.servico.FPException;
-import br.com.ljbm.recursos.FinancasPessoaisDelegate;
 
 /**
  * Produces a RESTful service to read the contents of the FundoInvestimento
@@ -33,31 +34,31 @@ import br.com.ljbm.recursos.FinancasPessoaisDelegate;
  * @since 28/03/2012
  * 
  */
-@Path("/fundosInvestimento")
 // @Path annotation tells JAX-RS that this class provides a REST endpoint mapped
 // to rest/fundosInvestimento (concatenating the path from the activator with
 // the path for this endpoint
+@Path("/fundosInvestimento")
 @RequestScoped
 public class FundoInvestimentoResourceRESTService {
 
 	@EJB (lookup="java:global/ljbmEAR/ljbmEJB/AvaliadorInvestimentoImpl!br.com.ljbm.fp.servico.AvaliadorInvestimento")
 	private AvaliadorInvestimento avaliadorInvestimento;
 
-	@Inject
-	private FinancasPessoaisDelegate financasPessoaisDelegate;
+	@EJB(name = "ejb/FPDominio") // usando <ejb-ref> no web.xml
+	FPDominio model;
 	
 	@Inject
 	private Logger log;
 
 	@POST
-	@Consumes(APPLICATION_JSON)
+	@Consumes(value= {APPLICATION_JSON, APPLICATION_XML})
 	public Response inclui(FundoInvestimento fundoInvestimento) {
 
 		try {
-			FundoInvestimento ret = financasPessoaisDelegate.incluiFundoInvestimento(fundoInvestimento);
+			FundoInvestimento ret = model.addFundoInvestimento(fundoInvestimento);
 			log.debug(String.format("fundo de investimento %d criado.", ret.getIde()));
-	        URI uri = URI.create("/fundosInvestimento/" + ret.getIde());
-	        return Response.created(uri).build();
+			URI uri = URI.create("/fundosInvestimento/" + ret.getIde());
+			return Response.created(uri).build();
 		} catch (FPException e) {
 			log.error(e.getLocalizedMessage());
 			return Response.status(HttpStatus.SC_INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
@@ -66,25 +67,24 @@ public class FundoInvestimentoResourceRESTService {
 	
 	@GET
 	@Path("/{id:[0-9][0-9]*}")
-	@Produces({APPLICATION_JSON,"text/xml"})
+	@Produces(value= {APPLICATION_JSON, APPLICATION_XML})
 	// The lookupMemberById() method is called when the endpoint is accessed
 	// with a member id parameter appended (for example
 	// rest/fundosInvestimento/1). Again, the object is automatically mapped to
 	// XML by JAXB
 	public Response lookupFundoInvestimentoById(
-			@PathParam("id") long id) throws Exception {
-		FundoInvestimento fundoInvestimento = financasPessoaisDelegate
-				.recuperaFundosInvestimentoPorIde(id);
+			@PathParam("ide") Long ide) throws Exception {
+		FundoInvestimento fundoInvestimento = model.getFundoInvestimento(ide);
 		return Response.ok().entity(fundoInvestimento).build();
 	}
 	
 	@GET
-	@Produces("text/xml")
+	@Produces(value= {APPLICATION_JSON, APPLICATION_XML})
 	// The listAllFundosInvestimento() method is called when the raw endpoint is
 	// accessed (for example rest/fundosInvestimento) and offers up a list of
 	// endpoints. Notice that the object is automatically mapped to XML by JAXB
 	public List<FundoInvestimento> listAllFundosInvestimento() throws Exception {
-		final List<FundoInvestimento> results = financasPessoaisDelegate.recuperaFundosInvestimentoPorName();
+		final List<FundoInvestimento> results = model.retrieveFundosInvestimentoOrderedByName();
 		return results;
 	}
 

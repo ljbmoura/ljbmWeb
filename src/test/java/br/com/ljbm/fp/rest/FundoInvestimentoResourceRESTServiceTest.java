@@ -66,31 +66,30 @@ public class FundoInvestimentoResourceRESTServiceTest {
 
 	@Test
 	public void test01InclusaoFundosInvestimento() {
-
+		//@formatter:off
 		Stream
+			.of(Agora_NTNB_2035)
+			.forEach(fundo -> {
+				Response response = enviaPost(fundo);
+				log.debug(response.body().asString());
 
-				.of(Agora_NTNB_2035)
+				Assert.assertEquals(HttpStatus.SC_CREATED, response.getStatusCode());
+				String location = response.getHeader("Location");
+				log.debug(location);
 
-				.forEach(fundo -> {
-					Response response = enviaPost(fundo);
-					log.debug(response.body().asString());
-
-					Assert.assertEquals(HttpStatus.SC_CREATED, response.getStatusCode());
-					String location = response.getHeader("Location");
-					log.debug(location);
-
-					JsonPath retorno = enviaGet(location);
-					retorno.prettyPrint();
-					FundoInvestimento resourceCriado = retorno.getObject("", FundoInvestimento.class);
-					log.info(resourceCriado);
-					assertThat(resourceCriado.getIde(), notNullValue());
-					assertThat(resourceCriado.getNome(), org.hamcrest.Matchers.equalTo(fundo.getNome()));
-					assertThat(resourceCriado.getCNPJ(), org.hamcrest.Matchers.equalTo(fundo.getCNPJ()));
-					assertThat(resourceCriado.getTipoFundoInvestimento(),
-							org.hamcrest.Matchers.equalTo(fundo.getTipoFundoInvestimento()));
-					assertThat(resourceCriado.getTaxaImpostoRenda(),
-							org.hamcrest.Matchers.equalTo(fundo.getTaxaImpostoRenda()));
-				});
+				JsonPath retorno = enviaGet(location);
+				retorno.prettyPrint();
+				FundoInvestimento resourceCriado = retorno.getObject("", FundoInvestimento.class);
+				log.info(resourceCriado);
+				assertThat(resourceCriado.getIde(), notNullValue());
+				assertThat(resourceCriado.getNome(), org.hamcrest.Matchers.equalTo(fundo.getNome()));
+				assertThat(resourceCriado.getCNPJ(), org.hamcrest.Matchers.equalTo(fundo.getCNPJ()));
+				assertThat(resourceCriado.getTipoFundoInvestimento(),
+						org.hamcrest.Matchers.equalTo(fundo.getTipoFundoInvestimento()));
+				assertThat(resourceCriado.getTaxaImpostoRenda(),
+						org.hamcrest.Matchers.equalTo(fundo.getTaxaImpostoRenda()));
+			});
+		//@formatter:on
 	}
 
 	@Test
@@ -106,13 +105,29 @@ public class FundoInvestimentoResourceRESTServiceTest {
 				Agora_NTNB_2035);
 	}
 
-	//FIXME uso de basePath não funcionando
+	// FIXME uso de basePath não funcionando
 	private static Response enviaPost(FundoInvestimento fundoInvestimento) {
-		return given().header("Accept", "application/json").contentType("application/json").body(fundoInvestimento)
-				.when().post(basePath + "ljbmWeb/rest/fundosInvestimento").andReturn();
+		//@formatter:off
+		return 
+			given()
+				.header("Accept", "application/json")
+				.contentType("application/json")
+				.body(fundoInvestimento)
+			.when()
+				.post(basePath + "ljbmWeb/rest/fundosInvestimento")
+			.andReturn();
+		// @formatter:on
 	}
 
 	private static JsonPath enviaGet(String location) {
-		return given().header("Accept", "application/json").when().get(location).andReturn().jsonPath();
+		//@formatter:off
+		return 
+			given()
+				.header("Accept", "application/json")
+			.when()
+				.get(location)
+			.andReturn()
+				.jsonPath();
+		// @formatter:on
 	}
 }

@@ -11,6 +11,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.com.ljbm.fp.modelo.FundoInvestimento;
+import br.com.ljbm.fp.servico.FPException;
 import br.com.ljbm.recursos.FinancasPessoaisDelegate;
 
 /**
@@ -45,7 +46,7 @@ public class FundoInvestimentoListProducer {
 	// whenever they are needed. This is a good approach as it allows us to
 	// cache the list of members, but keep it up to date at the same time
 	public void onMemberListChanged(
-			@Observes(notifyObserver = Reception.IF_EXISTS) final FundoInvestimento fundoInvestimento) {
+			@Observes(notifyObserver = Reception.IF_EXISTS) final FundoInvestimento fundoInvestimento) throws FPException {
 		retrieveAllFundosInvestimentoOrderedByName();
 	}
 
