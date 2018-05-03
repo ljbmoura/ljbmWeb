@@ -21,6 +21,7 @@ import org.apache.http.HttpStatus;
 import org.apache.logging.log4j.Logger;
 
 import br.com.ljbm.fp.modelo.ComparacaoInvestimentoVersusSELIC;
+import br.com.ljbm.fp.modelo.Corretora;
 import br.com.ljbm.fp.modelo.FundoInvestimento;
 import br.com.ljbm.fp.servico.AvaliadorInvestimento;
 import br.com.ljbm.fp.servico.FPDominio;
@@ -55,6 +56,8 @@ public class FundoInvestimentoResourceRESTService {
 	public Response inclui(FundoInvestimento fundoInvestimento) {
 
 		try {
+			Corretora c = model.getCorretora(fundoInvestimento.getCorretora().getIde());
+			fundoInvestimento.setCorretora(c);
 			FundoInvestimento ret = model.addFundoInvestimento(fundoInvestimento);
 			log.debug(String.format("fundo de investimento %d criado.", ret.getIde()));
 			URI uri = URI.create("/fundosInvestimento/" + ret.getIde());
@@ -66,16 +69,23 @@ public class FundoInvestimentoResourceRESTService {
 	}
 	
 	@GET
-	@Path("/{id:[0-9][0-9]*}")
+	@Path("/{ide:[0-9][0-9]*}")
 	@Produces(value= {APPLICATION_JSON, APPLICATION_XML})
 	// The lookupMemberById() method is called when the endpoint is accessed
 	// with a member id parameter appended (for example
 	// rest/fundosInvestimento/1). Again, the object is automatically mapped to
 	// XML by JAXB
 	public Response lookupFundoInvestimentoById(
-			@PathParam("ide") Long ide) throws Exception {
-		FundoInvestimento fundoInvestimento = model.getFundoInvestimento(ide);
-		return Response.ok().entity(fundoInvestimento).build();
+			@PathParam("ide") Long ide) throws FPException {
+		try {
+			FundoInvestimento fundoInvestimento = model.getFundoInvestimento(ide);
+			return Response.ok().entity(fundoInvestimento).build();
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+			throw e;
+//		} catch (FPException e) {
+//			throw e;
+		}
 	}
 	
 	@GET

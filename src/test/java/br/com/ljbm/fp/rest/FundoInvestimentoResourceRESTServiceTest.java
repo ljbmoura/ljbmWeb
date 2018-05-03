@@ -3,11 +3,16 @@ package br.com.ljbm.fp.rest;
 import static br.com.ljbm.fp.modelo.Corretora.cnpjAgora;
 import static br.com.ljbm.fp.modelo.Corretora.cnpjBB;
 import static com.jayway.restassured.RestAssured.basePath;
+import static com.jayway.restassured.RestAssured.baseURI;
 import static com.jayway.restassured.RestAssured.given;
+import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
+import static javax.ws.rs.core.MediaType.APPLICATION_XML;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.notNullValue;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Stream;
 
 import org.apache.http.HttpStatus;
@@ -38,10 +43,14 @@ public class FundoInvestimentoResourceRESTServiceTest {
 	private static FundoInvestimento Agora_NTNB_2035;
 
 	private static Logger log;
+	private static List<String> locations;
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		log = LogManager.getFormatterLogger(FundoInvestimentoResourceRESTServiceTest.class);
+		baseURI = "http://localhost:9080";
+		basePath = "/ljbmWeb/rest";
+//		com.jayway.restassured.RestAssured.config.getLogConfig().
 		BB = new Corretora();
 		BB.setIde(1l);
 		AGORA = new Corretora();
@@ -49,7 +58,7 @@ public class FundoInvestimentoResourceRESTServiceTest {
 		Agora_NTNB_2035 = new FundoInvestimento(cnpjAgora, "Agora NTNB-2035", new BigDecimal("0.15"),
 				TipoFundoInvestimento.TesouroDireto, AGORA);
 
-		basePath = "http://localhost:9080/";
+
 	}
 
 	@AfterClass
@@ -65,31 +74,43 @@ public class FundoInvestimentoResourceRESTServiceTest {
 	}
 
 	@Test
+//	@Ignore
 	public void test01InclusaoFundosInvestimento() {
-		//@formatter:off
+		locations = new ArrayList<String>();
 		Stream
 			.of(Agora_NTNB_2035)
 			.forEach(fundo -> {
-				Response response = enviaPost(fundo);
-				log.debug(response.body().asString());
+
+				Response response = enviaPost(fundo, "/fundosInvestimento");
+				log.info("Response Headers\n" + response.headers().toString());
+				response.prettyPrint();
 
 				Assert.assertEquals(HttpStatus.SC_CREATED, response.getStatusCode());
-				String location = response.getHeader("Location");
-				log.debug(location);
-
-				JsonPath retorno = enviaGet(location);
-				retorno.prettyPrint();
+				locations.add(response.getHeader("Location"));
+			});
+		//@formatter:on
+	}
+	
+	@Test
+	public void test02LeFundosInvestimento() {
+//		locations = new ArrayList<String>();
+//		locations.add("http://localhost:9080/ljbmWeb/rest/fundosInvestimento/51");
+		
+		locations
+			.stream()
+			.forEach(location -> {
+				JsonPath retorno = enviaGet(location, APPLICATION_JSON);
+				log.info(retorno.prettify());
 				FundoInvestimento resourceCriado = retorno.getObject("", FundoInvestimento.class);
 				log.info(resourceCriado);
 				assertThat(resourceCriado.getIde(), notNullValue());
-				assertThat(resourceCriado.getNome(), org.hamcrest.Matchers.equalTo(fundo.getNome()));
-				assertThat(resourceCriado.getCNPJ(), org.hamcrest.Matchers.equalTo(fundo.getCNPJ()));
-				assertThat(resourceCriado.getTipoFundoInvestimento(),
-						org.hamcrest.Matchers.equalTo(fundo.getTipoFundoInvestimento()));
-				assertThat(resourceCriado.getTaxaImpostoRenda(),
-						org.hamcrest.Matchers.equalTo(fundo.getTaxaImpostoRenda()));
-			});
-		//@formatter:on
+//				assertThat(resourceCriado.getNome(), org.hamcrest.Matchers.equalTo(location.getNome()));
+//				assertThat(resourceCriado.getCNPJ(), org.hamcrest.Matchers.equalTo(location.getCNPJ()));
+//				assertThat(resourceCriado.getTipoFundoInvestimento(),
+//						org.hamcrest.Matchers.equalTo(location.getTipoFundoInvestimento()));
+//				assertThat(resourceCriado.getTaxaImpostoRenda(),
+//						org.hamcrest.Matchers.equalTo(location.getTaxaImpostoRenda()));
+		});
 	}
 
 	@Test
@@ -106,24 +127,27 @@ public class FundoInvestimentoResourceRESTServiceTest {
 	}
 
 	// FIXME uso de basePath não funcionando
-	private static Response enviaPost(FundoInvestimento fundoInvestimento) {
+	private static Response enviaPost(FundoInvestimento fundoInvestimento, String destinoPost) {
 		//@formatter:off
+		
+		log.info("enviando post para " + destinoPost);
 		return 
 			given()
-				.header("Accept", "application/json")
-				.contentType("application/json")
+//				.header("Accept", APPLICATION_JSON)
+				.contentType(APPLICATION_XML)
 				.body(fundoInvestimento)
 			.when()
-				.post(basePath + "ljbmWeb/rest/fundosInvestimento")
+				.post(destinoPost)
 			.andReturn();
 		// @formatter:on
 	}
 
-	private static JsonPath enviaGet(String location) {
+	private static JsonPath enviaGet(String location, String tipoRetorno) {
 		//@formatter:off
+		log.info("enviando get para " + location);
 		return 
 			given()
-				.header("Accept", "application/json")
+				.header("Accept", tipoRetorno)
 			.when()
 				.get(location)
 			.andReturn()
