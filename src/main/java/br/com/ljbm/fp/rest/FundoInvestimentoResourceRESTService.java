@@ -15,6 +15,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.CacheControl;
 import javax.ws.rs.core.Response;
 
 import org.apache.http.HttpStatus;
@@ -79,7 +80,13 @@ public class FundoInvestimentoResourceRESTService {
 			@PathParam("ide") Long ide) throws FPException {
 		try {
 			FundoInvestimento fundoInvestimento = model.getFundoInvestimento(ide);
-			return Response.ok().entity(fundoInvestimento).build();
+//			log.info(fundoInvestimento.getCorretora().getCnpj());
+//			if (fundoInvestimento.getCorretora().getCnpj() == null) {
+//				fundoInvestimento.setCorretora(null);
+//			}
+			CacheControl cc = new CacheControl();
+			cc.setNoCache(true);
+			return Response.ok().entity(fundoInvestimento).cacheControl(cc).build();
 		} catch (RuntimeException e) {
 			e.printStackTrace();
 			throw e;
