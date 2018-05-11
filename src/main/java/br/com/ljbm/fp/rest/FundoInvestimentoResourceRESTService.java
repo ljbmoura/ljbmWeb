@@ -10,6 +10,7 @@ import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -90,8 +91,20 @@ public class FundoInvestimentoResourceRESTService {
 		} catch (RuntimeException e) {
 			e.printStackTrace();
 			throw e;
-//		} catch (FPException e) {
-//			throw e;
+		}
+	}
+	
+	@Path("/{ide:[0-9][0-9]*}")
+	@DELETE
+	public Response excluiFundoInvestimentoById(
+			@PathParam("ide") Long ide) throws FPException {
+		try {
+			FundoInvestimento fundoInvestimento = model.getFundoInvestimento(ide);
+			model.deleteFundoInvestimento(fundoInvestimento);
+			return Response.noContent().build();
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+			throw e;
 		}
 	}
 	

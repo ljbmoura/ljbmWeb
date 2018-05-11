@@ -23,10 +23,13 @@ public class JsonProvider extends JacksonJsonProvider {
 
 		// objectMapper.disable(SerializationFeature.FAIL_ON_SELF_REFERENCES);
 		objectMapper.enable(
-				SerializationFeature.FAIL_ON_EMPTY_BEANS
-				, SerializationFeature.WRAP_ROOT_VALUE
-				, SerializationFeature.WRAP_EXCEPTIONS
-				, SerializationFeature.FAIL_ON_SELF_REFERENCES);
+				// TODO INVESTIGAR NOTAÇÃO EQUIAVALENTE (@JsonRootName NÃO FUNCIONA)
+				 SerializationFeature.WRAP_ROOT_VALUE 
+				 
+//				, SerializationFeature.FAIL_ON_EMPTY_BEANS
+//				, SerializationFeature.WRAP_EXCEPTIONS
+//				, SerializationFeature.FAIL_ON_SELF_REFERENCES
+				 );
 		
 		objectMapper.enable(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY);
 

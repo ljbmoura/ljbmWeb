@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<Configuration status="INFO" name="ljbmTeste">
+
+	<Filter type="ThresholdFilter" level="trace" />
+
+	<Appenders>
+		<Console name="STDOUT" target="SYSTEM_OUT">
+			<PatternLayout
+				pattern="%-5p %d{yyyy-MM-dd HH:mm:ss,SSS} (%.5thread) %c{1}: %m%n%xEx"
+				charset="UTF-8" />
+		</Console>
+	</Appenders>
+
+	<Loggers>
+		<Logger name="br.com.ljbm" level="info" />
+
+		<Logger name="org.hibernate" level="info" />
+		<Logger name="net.sf.ehcache" level="info" />
+		<Logger name="org.hibernate.validator" level="warn" />
+		<Logger name="org.hibernate.SQL" level="warn" />
+		<Logger name="org.hibernate.type" level="warn" />
+		<Logger name="org.hibernate.dialect" level="warn" />
+
+		<Root level="debug">
+			<AppenderRef ref="STDOUT" />
+		</Root>
+	</Loggers>
+</Configuration>
