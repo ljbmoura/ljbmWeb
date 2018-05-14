@@ -3,19 +3,15 @@ package br.com.ljbm.fp.rest;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.MediaType.APPLICATION_XML;
 
-import java.util.List;
-
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.Response;
 
 import br.com.ljbm.fp.modelo.Corretora;
-import br.com.ljbm.fp.modelo.FundoInvestimento;
 import br.com.ljbm.fp.servico.FPDominio;
 import br.com.ljbm.fp.servico.FPException;
 
@@ -53,10 +49,12 @@ public class CorretoraResourceRESTService {
 	@Produces(value = { APPLICATION_JSON, APPLICATION_XML })
 	public Response lookupFundosDaCorretoraById(@PathParam("ide") Long ide) throws FPException {
 		try {
-			List<FundoInvestimento> reg = model.getFundosCorretora(ide);
-			GenericEntity<List<FundoInvestimento>> ents = new GenericEntity<List<FundoInvestimento>>(reg) {
-			};
-			return Response.ok().entity(ents).build();
+			Corretora reg = model.getFundosCorretora(ide);
+			return Response.ok().entity(reg).build();
+//			List<Corretora> reg = model.getFundosCorretora(ide);
+//			GenericEntity<List<FundoInvestimento>> ents = new GenericEntity<List<FundoInvestimento>>(reg) {
+//			};
+//			return Response.ok().entity(ents).build();
 		} catch (RuntimeException e) {
 			e.printStackTrace();
 			throw e;

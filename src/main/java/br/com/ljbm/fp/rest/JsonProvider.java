@@ -25,7 +25,6 @@ public class JsonProvider extends JacksonJsonProvider {
 		objectMapper.enable(
 				// TODO INVESTIGAR NOTAÇÃO EQUIAVALENTE (@JsonRootName NÃO FUNCIONA)
 				 SerializationFeature.WRAP_ROOT_VALUE 
-				 
 //				, SerializationFeature.FAIL_ON_EMPTY_BEANS
 //				, SerializationFeature.WRAP_EXCEPTIONS
 //				, SerializationFeature.FAIL_ON_SELF_REFERENCES

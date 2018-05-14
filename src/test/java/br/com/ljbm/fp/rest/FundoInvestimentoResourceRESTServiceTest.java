@@ -26,7 +26,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
@@ -45,11 +44,9 @@ public class FundoInvestimentoResourceRESTServiceTest {
 
 	private static Corretora BB;
 	private static Corretora AGORA;
-//	private static FundoInvestimento Agora_NTNB_2035;
 	private static List<FundoInvestimento> fundosTeste;	
 
 	private static Logger log;
-//	Map(<String>,<String>) locations;
 	private static Map<Long, String> locations;
 
 	@BeforeClass
