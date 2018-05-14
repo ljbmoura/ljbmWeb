@@ -26,6 +26,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
@@ -38,6 +39,7 @@ import br.com.ljbm.fp.modelo.TipoFundoInvestimento;
 
 //@formatter:off
 
+//@Ignore
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class FundoInvestimentoResourceRESTServiceTest {
 
@@ -116,6 +118,7 @@ public class FundoInvestimentoResourceRESTServiceTest {
 				
 				FundoInvestimento resourceLido = retorno.getObject("FundoInvestimento", FundoInvestimento.class);
 				assertThat(resourceLido.getIde(), notNullValue());
+				assertThat(resourceLido.getIde(), equalTo(fundo.getIde()));
 				assertThat(resourceLido.getNome(), equalTo(fundo.getNome()));
 				assertThat(resourceLido.getCNPJ(), equalTo(fundo.getCNPJ()));
 				assertThat(resourceLido.getTipoFundoInvestimento(),
