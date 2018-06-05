@@ -1,10 +1,11 @@
 package br.com.ljbm.fp.rest;
 
+import static br.com.ljbm.fp.rest.FundoInvestimentoResourceRESTService.FUNDOS_INVESTIMENTO_RESOURCE_BASE;
 import static br.com.ljbm.fp.modelo.Corretora.cnpjAgora;
 import static br.com.ljbm.fp.modelo.Corretora.cnpjBB;
-import static com.jayway.restassured.RestAssured.basePath;
-import static com.jayway.restassured.RestAssured.baseURI;
-import static com.jayway.restassured.RestAssured.given;
+import static io.restassured.RestAssured.basePath;
+import static io.restassured.RestAssured.baseURI;
+import static io.restassured.RestAssured.given;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -26,11 +27,12 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import com.jayway.restassured.path.json.JsonPath;
-import com.jayway.restassured.response.Response;
+import io.restassured.path.json.JsonPath;
+import io.restassured.response.Response;
 
 import br.com.ljbm.fp.modelo.Corretora;
 import br.com.ljbm.fp.modelo.FundoInvestimento;
@@ -87,12 +89,11 @@ public class FundoInvestimentoResourceRESTServiceTest {
 	}
 
 	@Test
-//	@Ignore
 	public void test01IncluiFundosInvestimento() {
 		locations = new HashMap<Long, String>();
 		fundosTeste
 			.forEach(fundo -> {
-				Response response = enviaPost(fundo, "/fundosInvestimento");
+				Response response = enviaPost(fundo, FUNDOS_INVESTIMENTO_RESOURCE_BASE);
 				log.info("Response Headers\n" + response.headers().toString());
 				response.prettyPrint();
 
@@ -106,11 +107,13 @@ public class FundoInvestimentoResourceRESTServiceTest {
 	}
 	
 	@Test
+	@Ignore
 	public void test02LeFundosInvestimento() {
 		fundosTeste
 			.forEach(fundo -> {
 				String location = locations.get(fundo.getIde());
-				JsonPath retorno = enviaGet(location, APPLICATION_JSON);
+				Response response = enviaGet(location, APPLICATION_JSON);
+				JsonPath retorno = response.jsonPath();
 				log.info(retorno.prettify());
 				
 				FundoInvestimento resourceLido = retorno.getObject("FundoInvestimento", FundoInvestimento.class);
@@ -125,8 +128,34 @@ public class FundoInvestimentoResourceRESTServiceTest {
 		});
 	}
 
+
 	@Test
-	public void test03ExcluirFundosInvestimento() {
+	public void test04LeFundosInvestimentoInexistente () {
+			String location = FUNDOS_INVESTIMENTO_RESOURCE_BASE + "/0";
+			Response response = enviaGet(location, APPLICATION_JSON);
+			Assert.assertEquals(HttpStatus.SC_NOT_FOUND, response.getStatusCode());
+			log.info("Response Headers\n" + response.headers().toString());
+			log.info("Response Body");
+			response.getBody().prettyPrint();
+	}
+	
+	@Test
+	public void test03LeFundosInvestimentoPorAgente_Titulo() {
+			String location = FUNDOS_INVESTIMENTO_RESOURCE_BASE + 
+					"?" 
+					+ "agente=BB BANCO DE INVESTIMENTO S/A - 1102303"
+					+ "&titulo=BB Prefixado 2023";
+			Response response = enviaGet(location, APPLICATION_JSON);
+			Assert.assertEquals(HttpStatus.SC_OK, response.getStatusCode());
+			log.info("Response Headers\n" + response.headers().toString());
+			log.info("Response Body");
+			response.getBody().prettyPrint();
+	}
+
+	
+	@Test
+	@Ignore
+	public void test05ExcluirFundosInvestimento() {
 		fundosTeste
 			.forEach(fundo -> {
 				String location = locations.get(fundo.getIde());
@@ -150,7 +179,7 @@ public class FundoInvestimentoResourceRESTServiceTest {
 			.andReturn();
 	}
 
-	private static JsonPath enviaGet(String location, String tipoRetorno) {
+	private static Response enviaGet(String location, String tipoRetorno) {
 	
 		log.info("enviando get para " + location);
 		return 
@@ -158,8 +187,8 @@ public class FundoInvestimentoResourceRESTServiceTest {
 				.header("Accept", tipoRetorno)
 			.when()
 				.get(location)
-			.andReturn()
-				.jsonPath();
+			.andReturn();
+				
 	}
 	
 	private static Response enviaDelete(String location) {

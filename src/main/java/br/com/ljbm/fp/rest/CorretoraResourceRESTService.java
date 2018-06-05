@@ -21,7 +21,7 @@ import br.com.ljbm.fp.servico.FPException;
  * @author luc
  * 
  */
-@Path("/corretora")
+@Path("/corretoras")
 @RequestScoped
 public class CorretoraResourceRESTService {
 

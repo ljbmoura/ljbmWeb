@@ -66,7 +66,7 @@ public class AvaliadorInvestimentoManagedBean {
 				FacesMessage.SEVERITY_INFO,
 				"Posição atual em", "Posicao Investimentos BB Frente a SELIC"));
 		// TODO: PARA DAR ERRO MESMO, IMPLEMENTAR A OBTENÇÃO DA DATA POSTERIORMENTE
-		avaliacao = avaliadorInvestimento.comparaInvestimentosComSELIC("");
+//		avaliacao = avaliadorInvestimento.comparaInvestimentosComSELIC("");
 		return "labEJB";
 	}
 
