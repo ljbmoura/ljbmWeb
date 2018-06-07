@@ -26,6 +26,7 @@ import org.apache.http.HttpStatus;
 import org.apache.logging.log4j.Logger;
 
 import br.com.ljbm.fp.interceptador.HttpInterceptor;
+import br.com.ljbm.fp.interceptador.Logged;
 import br.com.ljbm.fp.modelo.Aplicacao;
 import br.com.ljbm.fp.modelo.ComparacaoInvestimentoVersusSELIC;
 import br.com.ljbm.fp.modelo.Corretora;
@@ -50,6 +51,7 @@ import br.com.ljbm.fp.servico.FPException;
 @Interceptors(value={HttpInterceptor.class})
 public class FundoInvestimentoResourceRESTService {
 
+
 	public static final String FUNDOS_INVESTIMENTO_RESOURCE_BASE = "/fundosInvestimento";
 	
 	@EJB (lookup="java:global/ljbmEAR/ljbmEJB/AvaliadorInvestimentoImpl!br.com.ljbm.fp.servico.AvaliadorInvestimento")
@@ -60,6 +62,15 @@ public class FundoInvestimentoResourceRESTService {
 	
 	@Inject
 	private Logger log;
+	
+
+	public FundoInvestimentoResourceRESTService() {
+//		java.util.logging.Logger restLogger = java.util.logging.LogManager.getLogManager()
+//				.getLogger("br.com.ljbm.fp.rest.ResourceRESTServices");
+//		ResourceConfig config = new ResourceConfig(FundoInvestimentoResourceRESTService.class);
+//		config.register(new LoggingFeature(restLogger , LoggingFeature.Verbosity.PAYLOAD_ANY));
+//		config.register(LoggingFeature.class);
+	}
 
 	@GET
 	@Path("/{ide:[0-9][0-9]*}")
@@ -133,6 +144,7 @@ public class FundoInvestimentoResourceRESTService {
 	}
 	
 	@POST
+	@Logged
 	@Path("/{ide:[0-9][0-9]*}/aplicacoes")
 	@Consumes(value= {APPLICATION_JSON, APPLICATION_XML})
 	public Response inclui(@PathParam("ide") Long ide, Aplicacao aplicacao) {
@@ -143,7 +155,7 @@ public class FundoInvestimentoResourceRESTService {
 			aplicacao.setFundoInvestimento(fundoInvestimento);
 			Aplicacao ret = model.addAplicacao(aplicacao);
 			log.debug(String.format("aplicação %d criada.", ret.getIde()));
-			URI uri = URI.create("/fundosInvestimento/" + ide + "aplicacao/1");// + ret.getIde());
+			URI uri = URI.create("/fundosInvestimento/" + ide + "/aplicacao/" + ret.getIde());
 			return Response.created(uri).build();
 		} catch (FPException e) {
 			log.error(e.getLocalizedMessage());
@@ -152,6 +164,7 @@ public class FundoInvestimentoResourceRESTService {
 	}
 	
 	@GET
+	@Logged
 	@Path("/aplicacoes/{ide:[0-9][0-9]*}")
 	@Produces(value= {APPLICATION_JSON, APPLICATION_XML})
 	public Response lookupAplicacaoById(

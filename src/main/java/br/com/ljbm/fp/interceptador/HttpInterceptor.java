@@ -1,12 +1,13 @@
 package br.com.ljbm.fp.interceptador;
 
+import java.util.Map;
+
 import javax.annotation.Priority;
 import javax.inject.Inject;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.apache.logging.log4j.Logger;
 
@@ -23,9 +24,12 @@ public class HttpInterceptor {
 
 	@Inject
 	HttpServletRequest request;
+	
+//	@Inject
+//	HttpServletResponse response;
 
-	@Inject
-	HttpSession session;
+//	@Inject
+//	HttpSession session;
 
 //	@Inject
 //	private IEWRepositorio iewRepositorio;
@@ -33,12 +37,14 @@ public class HttpInterceptor {
 	@AroundInvoke
 	public Object logaRequisicoes(InvocationContext contexto) throws Exception {
 		
-		long inicio = System.currentTimeMillis();
-		Object retorno = contexto.proceed();
-		log.debug(String.format("%s.%s: %sms"
-				, contexto.getMethod().getDeclaringClass().getSimpleName() // contexto.getTarget().getClass().getSimpleName()
-				, contexto.getMethod().getName()
-				, System.currentTimeMillis() - inicio));
+		Map<String, Object> data = contexto.getContextData();
+		data.forEach((k, v) -> log.info("data key: " + k + " - value: " + v));
+		
+		Object retorno =null;
+		try {
+			retorno = contexto.proceed();
+		} catch (Exception e) {
+		}
 		return retorno;
 		
 //		Integer idAplicacao = 19;
