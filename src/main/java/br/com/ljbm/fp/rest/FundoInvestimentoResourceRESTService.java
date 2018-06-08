@@ -9,7 +9,6 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
-import javax.interceptor.Interceptors;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -25,8 +24,8 @@ import javax.ws.rs.core.Response;
 import org.apache.http.HttpStatus;
 import org.apache.logging.log4j.Logger;
 
-import br.com.ljbm.fp.interceptador.HttpInterceptor;
-import br.com.ljbm.fp.interceptador.Logged;
+import br.com.ljbm.fp.interceptador.RequestLogged;
+import br.com.ljbm.fp.interceptador.ResponseLogged;
 import br.com.ljbm.fp.modelo.Aplicacao;
 import br.com.ljbm.fp.modelo.ComparacaoInvestimentoVersusSELIC;
 import br.com.ljbm.fp.modelo.Corretora;
@@ -48,7 +47,7 @@ import br.com.ljbm.fp.servico.FPException;
 // the path for this endpoint
 @Path("/fundosInvestimento")
 @RequestScoped
-@Interceptors(value={HttpInterceptor.class})
+//@Interceptors(value={HttpInterceptor.class})
 public class FundoInvestimentoResourceRESTService {
 
 
@@ -144,7 +143,7 @@ public class FundoInvestimentoResourceRESTService {
 	}
 	
 	@POST
-	@Logged
+	@RequestLogged
 	@Path("/{ide:[0-9][0-9]*}/aplicacoes")
 	@Consumes(value= {APPLICATION_JSON, APPLICATION_XML})
 	public Response inclui(@PathParam("ide") Long ide, Aplicacao aplicacao) {
@@ -164,7 +163,7 @@ public class FundoInvestimentoResourceRESTService {
 	}
 	
 	@GET
-	@Logged
+	@ResponseLogged 
 	@Path("/aplicacoes/{ide:[0-9][0-9]*}")
 	@Produces(value= {APPLICATION_JSON, APPLICATION_XML})
 	public Response lookupAplicacaoById(

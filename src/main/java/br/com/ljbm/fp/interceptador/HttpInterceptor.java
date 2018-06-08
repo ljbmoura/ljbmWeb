@@ -1,5 +1,7 @@
 package br.com.ljbm.fp.interceptador;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.Map;
 
 import javax.annotation.Priority;
@@ -8,6 +10,8 @@ import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.container.ContainerRequestContext;
+import javax.ws.rs.container.ContainerResponseContext;
 
 import org.apache.logging.log4j.Logger;
 
@@ -26,6 +30,12 @@ public class HttpInterceptor {
 	HttpServletRequest request;
 	
 //	@Inject
+	ContainerRequestContext requestContext;
+	
+//	@Inject
+	ContainerResponseContext responseContext;
+	
+//	@Inject
 //	HttpServletResponse response;
 
 //	@Inject
@@ -37,14 +47,25 @@ public class HttpInterceptor {
 	@AroundInvoke
 	public Object logaRequisicoes(InvocationContext contexto) throws Exception {
 		
-		Map<String, Object> data = contexto.getContextData();
-		data.forEach((k, v) -> log.info("data key: " + k + " - value: " + v));
-		
-		Object retorno =null;
-		try {
-			retorno = contexto.proceed();
-		} catch (Exception e) {
-		}
+//		Map<String, Object> data = contexto.getContextData();
+//		data.forEach((k, v) -> log.info("data key: " + k + " - value: " + v));
+//    	log.info(requestContext.getUriInfo().getAbsolutePath());
+//    	log.info(requestContext.getHeaders().toString());
+    	
+    	StringBuilder buffer = new StringBuilder();
+    	BufferedReader reader = new BufferedReader(new InputStreamReader(request.getInputStream()));
+    	String line;
+    	while ((line = reader.readLine()) != null) {
+    		buffer.append(line);
+    	}	
+    	String requestBody = buffer.toString();
+    	log.info(String.format("request  payload body\r%s", requestBody));
+    	
+//    	log.info(responseContext.getLocation());
+//    	log.info(responseContext.getHeaders().toString());
+//    	log.info(String.format("response payload body\r%s", responseContext.getEntity()));
+    	
+		Object retorno = contexto.proceed();
 		return retorno;
 		
 //		Integer idAplicacao = 19;
