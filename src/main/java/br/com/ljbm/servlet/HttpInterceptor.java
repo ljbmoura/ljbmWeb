@@ -1,8 +1,7 @@
-package br.com.ljbm.fp.interceptador;
+package br.com.ljbm.servlet;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.Map;
 
 import javax.annotation.Priority;
 import javax.inject.Inject;
@@ -10,8 +9,6 @@ import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.container.ContainerRequestContext;
-import javax.ws.rs.container.ContainerResponseContext;
 
 import org.apache.logging.log4j.Logger;
 
@@ -30,19 +27,16 @@ public class HttpInterceptor {
 	HttpServletRequest request;
 	
 //	@Inject
-	ContainerRequestContext requestContext;
+//	ContainerRequestContext requestContext;
 	
 //	@Inject
-	ContainerResponseContext responseContext;
+//	ContainerResponseContext responseContext;
 	
 //	@Inject
 //	HttpServletResponse response;
 
 //	@Inject
 //	HttpSession session;
-
-//	@Inject
-//	private IEWRepositorio iewRepositorio;
 
 	@AroundInvoke
 	public Object logaRequisicoes(InvocationContext contexto) throws Exception {

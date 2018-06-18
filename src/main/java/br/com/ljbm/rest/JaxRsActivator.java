@@ -1,7 +1,9 @@
-package br.com.ljbm.fp.rest;
+package br.com.ljbm.rest;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
+
+import org.glassfish.jersey.server.ResourceConfig;
 
 /**
  * A class extending {@link Application} and annotated with @ApplicationPath is
@@ -13,6 +15,10 @@ import javax.ws.rs.core.Application;
  * </p>
  */
 @ApplicationPath("/rest")
-public class JaxRsActivator extends Application {
-	/* class body intentionally left blank */
+public class JaxRsActivator 
+//				extends Application {
+				extends ResourceConfig {
+    public JaxRsActivator() {
+        packages("br.com.ljbm");
+    }
 }

@@ -1,4 +1,4 @@
-package br.com.ljbm.fp.interceptador;
+package br.com.ljbm.rest;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -11,4 +11,6 @@ import javax.ws.rs.NameBinding;
 @InterceptorBinding
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.TYPE, ElementType.METHOD })
-public @interface Logged { }
+public @interface Logged {
+//	int momento() default 1;
+}

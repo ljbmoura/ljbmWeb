@@ -1,4 +1,4 @@
-package br.com.ljbm.fp.rest;
+package br.com.ljbm.servlet;
 
 import java.io.IOException;
 
@@ -28,7 +28,7 @@ public class MetricasFilter implements Filter {
 		HttpServletRequest httpReq = (HttpServletRequest)req;
 		chain.doFilter(req, res);
 		long t1 = System.currentTimeMillis();
-		log.info("%s %s (%dms)", httpReq.getMethod(), httpReq.getPathInfo() , t1 - t0);
+		log.debug("%s %s (%dms)", httpReq.getMethod(), httpReq.getPathInfo() , t1 - t0);
 	}
 
 	@Override

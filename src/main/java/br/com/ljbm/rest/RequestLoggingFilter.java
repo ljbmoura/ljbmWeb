@@ -1,4 +1,4 @@
-package br.com.ljbm.fp.interceptador;
+package br.com.ljbm.rest;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -8,15 +8,14 @@ import java.io.InputStream;
 import javax.inject.Inject;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
-import javax.ws.rs.ext.Provider;
 
 import org.apache.logging.log4j.Logger;
 import org.glassfish.jersey.message.internal.ReaderWriter;
 import org.glassfish.jersey.server.ContainerException;
 
 
-@RequestLogged
-@Provider
+//@Logged(momento=1)
+//@Provider
 public class RequestLoggingFilter implements ContainerRequestFilter {
 	@Inject
 	Logger log;

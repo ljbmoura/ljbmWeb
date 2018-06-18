@@ -24,8 +24,6 @@ import javax.ws.rs.core.Response;
 import org.apache.http.HttpStatus;
 import org.apache.logging.log4j.Logger;
 
-import br.com.ljbm.fp.interceptador.RequestLogged;
-import br.com.ljbm.fp.interceptador.ResponseLogged;
 import br.com.ljbm.fp.modelo.Aplicacao;
 import br.com.ljbm.fp.modelo.ComparacaoInvestimentoVersusSELIC;
 import br.com.ljbm.fp.modelo.Corretora;
@@ -143,12 +141,11 @@ public class FundoInvestimentoResourceRESTService {
 	}
 	
 	@POST
-	@RequestLogged
+//	@Logged//(momento=1)
 	@Path("/{ide:[0-9][0-9]*}/aplicacoes")
 	@Consumes(value= {APPLICATION_JSON, APPLICATION_XML})
-	public Response inclui(@PathParam("ide") Long ide, Aplicacao aplicacao) {
+	public Response incluiAplicacao(@PathParam("ide") Long ide, Aplicacao aplicacao) {
 
-		log.info("aplicacoes de " + ide );
 		try {
 			FundoInvestimento fundoInvestimento = model.getFundoInvestimento(ide);
 			aplicacao.setFundoInvestimento(fundoInvestimento);
@@ -163,23 +160,20 @@ public class FundoInvestimentoResourceRESTService {
 	}
 	
 	@GET
-	@ResponseLogged 
+//	@Logged//(momento=2) 
 	@Path("/aplicacoes/{ide:[0-9][0-9]*}")
 	@Produces(value= {APPLICATION_JSON, APPLICATION_XML})
-	public Response lookupAplicacaoById(
-			@PathParam("ide") Long ide) throws FPException {
+	public Response buscaAplicacaoPorIde(@PathParam("ide") Long ide) throws FPException {
 		try {
-			Aplicacao aplicacao = model.getAplicacao(ide);
+			Aplicacao reg = model.getAplicacao(ide);
 			CacheControl cc = new CacheControl();
 			cc.setNoCache(true);
-			return Response.ok().entity(aplicacao).cacheControl(cc).build();
+			return Response.ok().entity(reg).cacheControl(cc).build();
 		} catch (FPException e) {
-			String msg = e.getLocalizedMessage();
-			log.warn(msg);
-			return Response.status(HttpStatus.SC_NOT_FOUND).entity(msg).build();
+			return Response.status(HttpStatus.SC_NOT_FOUND).entity(e.getLocalizedMessage()).build();
 		}
 	}
-	
+		
 //	@GET
 //	@Produces(value= {APPLICATION_JSON, APPLICATION_XML})
 //	// The listAllFundosInvestimento() method is called when the raw endpoint is

@@ -1,4 +1,4 @@
-package br.com.ljbm.fp.interceptador;
+package br.com.ljbm.rest;
 
 import java.io.IOException;
 
@@ -6,13 +6,12 @@ import javax.inject.Inject;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerResponseContext;
 import javax.ws.rs.container.ContainerResponseFilter;
-import javax.ws.rs.ext.Provider;
 
 import org.apache.logging.log4j.Logger;
 
 
-@ResponseLogged
-@Provider
+//@Logged//(momento=2)
+//@Provider
 public class ResponseLoggingFilter implements ContainerResponseFilter {
 	@Inject
 	Logger log;

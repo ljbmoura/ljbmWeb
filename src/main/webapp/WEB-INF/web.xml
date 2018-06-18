@@ -67,14 +67,14 @@
 	<!-- <url-pattern>/rest/*</url-pattern> -->
 	<!-- </servlet-mapping> -->
 	
-<!-- 	<filter> -->
-<!-- 		<filter-name>MetricasFilter</filter-name> -->
-<!-- 		<filter-class>br.com.ljbm.fp.rest.MetricasFilter</filter-class> -->
-<!-- 	</filter>	 -->
-<!-- 	<filter-mapping> -->
-<!-- 		<filter-name>MetricasFilter</filter-name> -->
-<!-- 		<url-pattern>/rest/*</url-pattern> -->
-<!-- 	</filter-mapping>	 -->
+	<filter>
+		<filter-name>MetricasFilter</filter-name>
+		<filter-class>br.com.ljbm.servlet.MetricasFilter</filter-class>
+	</filter>	
+	<filter-mapping>
+		<filter-name>MetricasFilter</filter-name>
+		<url-pattern>/rest/*</url-pattern>
+	</filter-mapping>	
 	<session-config>
 		<session-timeout>30</session-timeout>
 	</session-config>
