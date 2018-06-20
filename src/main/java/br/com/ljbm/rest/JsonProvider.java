@@ -27,20 +27,26 @@ public class JsonProvider extends JacksonJsonProvider {
 //				   .registerModule(new ParameterNamesModule())
 //				   .registerModule(new Jdk8Module())
 			; 
-
-		// objectMapper.disable(SerializationFeature.FAIL_ON_SELF_REFERENCES);
-		objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 		SimpleDateFormat formatoDataBR = new SimpleDateFormat("yyyy-MM-dd");
 		objectMapper.setDateFormat(formatoDataBR);
+
+		// objectMapper.disable(SerializationFeature.FAIL_ON_SELF_REFERENCES);
+		
+
+		objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 		objectMapper.enable(
 				// TODO INVESTIGAR NOTAÇÃO EQUIAVALENTE (@JsonRootName NÃO FUNCIONA)
-				 SerializationFeature.WRAP_ROOT_VALUE 
+				 SerializationFeature.WRAP_ROOT_VALUE
+				 , SerializationFeature.WRITE_ENUMS_USING_INDEX
+				 , SerializationFeature.INDENT_OUTPUT
 				 );
 //				, SerializationFeature.FAIL_ON_EMPTY_BEANS
 //				, SerializationFeature.WRAP_EXCEPTIONS
 //				, SerializationFeature.FAIL_ON_SELF_REFERENCES
+
 		objectMapper.enable(
-				 DeserializationFeature.UNWRAP_ROOT_VALUE
+				 DeserializationFeature.UNWRAP_ROOT_VALUE 
+				 , DeserializationFeature.READ_ENUMS_USING_TO_STRING
 				 );
 		
 		objectMapper.enable(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY);

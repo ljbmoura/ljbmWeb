@@ -42,8 +42,6 @@ public class CorretoraResourceRESTService {
 	public Response buscaCorretoraPorIde(@PathParam("ide") Long ide) throws FPException {
 		try {
 			Corretora reg = model.getCorretora(ide);
-//			CacheControl cc = new CacheControl();
-//			cc.setNoCache(true);
 			return Response.ok().entity(reg).cacheControl(SEM_CACHE).build();
 		} catch (FPException e) {
 			return Response.status(HttpStatus.SC_NOT_FOUND).entity(e.getLocalizedMessage()).build();
@@ -56,7 +54,7 @@ public class CorretoraResourceRESTService {
 	public Response buscaFundosDaCorretoraPorIde(@PathParam("ide") Long ide) throws FPException {
 		try {
 			Corretora reg = model.getFundosCorretora(ide);
-			return Response.ok().entity(reg).build();
+			return Response.ok().entity(reg).cacheControl(SEM_CACHE).build();
 //			List<Corretora> reg = model.getFundosCorretora(ide);
 //			GenericEntity<List<FundoInvestimento>> ents = new GenericEntity<List<FundoInvestimento>>(reg) {
 //			};

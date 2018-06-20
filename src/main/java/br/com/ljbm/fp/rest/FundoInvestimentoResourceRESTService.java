@@ -48,7 +48,11 @@ import br.com.ljbm.fp.servico.FPException;
 //@Interceptors(value={HttpInterceptor.class})
 public class FundoInvestimentoResourceRESTService {
 
-
+	static private CacheControl SEM_CACHE;
+	static {
+		SEM_CACHE = new CacheControl();
+		SEM_CACHE.setNoCache(true);
+	}
 	public static final String FUNDOS_INVESTIMENTO_RESOURCE_BASE = "/fundosInvestimento";
 	
 	@EJB (lookup="java:global/ljbmEAR/ljbmEJB/AvaliadorInvestimentoImpl!br.com.ljbm.fp.servico.AvaliadorInvestimento")
@@ -76,9 +80,7 @@ public class FundoInvestimentoResourceRESTService {
 			@PathParam("ide") Long ide) throws FPException {
 		try {
 			FundoInvestimento fundoInvestimento = model.getFundoInvestimento(ide);
-			CacheControl cc = new CacheControl();
-			cc.setNoCache(true);
-			return Response.ok().entity(fundoInvestimento).cacheControl(cc).build();
+			return Response.ok().entity(fundoInvestimento).cacheControl(SEM_CACHE).build();
 		} catch (FPException e) {
 			String msg = e.getLocalizedMessage();
 			log.warn(msg);
@@ -92,7 +94,7 @@ public class FundoInvestimentoResourceRESTService {
 			@QueryParam("agente") String agente, @QueryParam("titulo") String titulo) throws FPException {
 		GenericEntity<List<FundoInvestimento>> ents;
 		List<FundoInvestimento> results;
-		log.info(agente);
+		log.debug(String.format("listFundosInvestimento invocado com agente %s e titulo %s", agente, titulo));
 		if (agente == null || titulo == null) {
 			results = model.retrieveFundosInvestimentoOrderedByName();
 		} else {
@@ -166,9 +168,7 @@ public class FundoInvestimentoResourceRESTService {
 	public Response buscaAplicacaoPorIde(@PathParam("ide") Long ide) throws FPException {
 		try {
 			Aplicacao reg = model.getAplicacao(ide);
-			CacheControl cc = new CacheControl();
-			cc.setNoCache(true);
-			return Response.ok().entity(reg).cacheControl(cc).build();
+			return Response.ok().entity(reg).cacheControl(SEM_CACHE).build();
 		} catch (FPException e) {
 			return Response.status(HttpStatus.SC_NOT_FOUND).entity(e.getLocalizedMessage()).build();
 		}
