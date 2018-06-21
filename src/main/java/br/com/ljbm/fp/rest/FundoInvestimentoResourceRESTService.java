@@ -94,7 +94,7 @@ public class FundoInvestimentoResourceRESTService {
 			@QueryParam("agente") String agente, @QueryParam("titulo") String titulo) throws FPException {
 		GenericEntity<List<FundoInvestimento>> ents;
 		List<FundoInvestimento> results;
-		log.debug(String.format("listFundosInvestimento invocado com agente %s e titulo %s", agente, titulo));
+//		log.debug(String.format("listFundosInvestimento invocado com agente '%s' e titulo '%s'", agente, titulo));
 		if (agente == null || titulo == null) {
 			results = model.retrieveFundosInvestimentoOrderedByName();
 		} else {

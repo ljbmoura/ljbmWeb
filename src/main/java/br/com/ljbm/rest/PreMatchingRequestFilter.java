@@ -19,8 +19,9 @@ public class PreMatchingRequestFilter implements ContainerRequestFilter {
 	Logger LOG;
 
     @Override
-    public void filter(ContainerRequestContext ctx) throws IOException {
-    	LOG.debug(ctx.getMethod() + " " + ctx.getUriInfo().getAbsolutePath());
-    	LOG.debug(FiltersHelper.formataHeaders(ctx.getHeaders().toString()));
+    public void filter(ContainerRequestContext ctxRequest) throws IOException {
+    	LOG.debug(ctxRequest.getMethod() + " " + ctxRequest.getUriInfo().getAbsolutePath());
+    	LOG.debug(FiltersHelper.formataHeaders(ctxRequest.getHeaders().toString()));
+    	LOG.debug("QueryParameters " + ctxRequest.getUriInfo().getQueryParameters().toString());
     }
 }

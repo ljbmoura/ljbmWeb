@@ -17,11 +17,11 @@ public class ResponseFilter implements ContainerResponseFilter {
 	Logger LOG;
 
 	@Override
-	public void filter(ContainerRequestContext requestContext, ContainerResponseContext ctx)
+	public void filter(ContainerRequestContext ctxRequest, ContainerResponseContext ctxResponse)
 			throws IOException {
-		LOG.debug(FiltersHelper.formataHeaders(ctx.getHeaders().toString()));
-		if (ctx.hasEntity()) {
-			LOG.debug(FiltersHelper.formataBody(ctx.getEntity()));
+		LOG.debug(FiltersHelper.formataHeaders(ctxResponse.getHeaders().toString()));
+		if (ctxResponse.hasEntity()) {
+			LOG.debug(FiltersHelper.formataBody(ctxResponse.getEntity()));
 		}
 	}
 }
