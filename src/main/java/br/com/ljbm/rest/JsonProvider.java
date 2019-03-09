@@ -1,7 +1,5 @@
 package br.com.ljbm.rest;
 
-import java.text.SimpleDateFormat;
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -21,17 +19,17 @@ import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 public class JsonProvider extends JacksonJsonProvider {
 
 	public JsonProvider() {
+		
 		ObjectMapper objectMapper = new ObjectMapper()
 				.registerModule(new Hibernate5Module())
 				.registerModule(new JavaTimeModule()) 	// new module, NOT JSR310Module
 //				   .registerModule(new ParameterNamesModule())
 //				   .registerModule(new Jdk8Module())
 			; 
-		SimpleDateFormat formatoDataBR = new SimpleDateFormat("yyyy-MM-dd");
-		objectMapper.setDateFormat(formatoDataBR);
+//		SimpleDateFormat formatoDataBR = new SimpleDateFormat("dd/MM/yyyy");
+//		objectMapper.setDateFormat(formatoDataBR);
 
 		// objectMapper.disable(SerializationFeature.FAIL_ON_SELF_REFERENCES);
-		
 
 		objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 		objectMapper.enable(
